@@ -22,18 +22,53 @@ spec:
       containers:
       - name: github-oauth-service
         image: impyrio/github-oauth-service:${DOCKER_IMAGE_TAG}
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/conf
         ports:
           - name: http
             containerPort: 8000
+        env:
+          - name: CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: oauth-config
+                key: client-id
+          - name: CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oauth-config
+                key: client-secret
+          - name: CALLBACK_URI
+            value: ${$INSTANCE_URI}/oauth:authorize
+          - name: MONGO_URI
+            valueFrom:
+              secretKeyRef:
+                name: session-config
+                key: mongo-uri
+          - name: MONGO_DB
+            valueFrom:
+              secretKeyRef:
+                name: session-config
+                key: mongo-db
+          - name: MONGO_COLLECTION
+            valueFrom:
+              secretKeyRef:
+                name: session-config
+                key: mongo-collection
+          - name: MONGO_COLLECTION
+            valueFrom:
+              secretKeyRef:
+                name: session-config
+                key: mongo-collection
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: session-config
+                key: session-secret
         resources:
           requests:
             cpu: 10m
             memory: 50Mi
           limits:
-            cpu: 50m
+            cpu: 20m
             memory: 100Mi
 
 ---
