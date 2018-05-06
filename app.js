@@ -43,8 +43,8 @@ const app = express();
 const MongoDBStore = require('connect-mongodb-session')(session);
 var store = new MongoDBStore(mongo_config);
 store.on('error', function(error) {
-  assert.ifError(error);
-  assert.ok(false);
+  console.error(error);
+  process.exit(1);
 });
 app.use(session({
   secret: session_secret,
