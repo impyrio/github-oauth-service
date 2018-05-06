@@ -37,7 +37,7 @@ spec:
                 name: oauth-config
                 key: client-secret
           - name: CALLBACK_URI
-            value: ${$INSTANCE_URI}/oauth:authorize
+            value: ${INSTANCE_URI}/oauth:authorize
           - name: MONGO_URI
             valueFrom:
               secretKeyRef:
