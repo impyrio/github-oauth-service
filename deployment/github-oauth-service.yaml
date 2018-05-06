@@ -1,0 +1,53 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: github-oauth-service
+  namespace: default
+  labels:
+    app: github-oauth-service
+    tier: public
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: github-oauth-service
+      tier: public
+  template:
+    metadata:
+      name: github-oauth-service
+      labels:
+        app: github-oauth-service
+        tier: public
+    spec:
+      containers:
+      - name: github-oauth-service
+        image: impyrio/github-oauth-service:${DOCKER_IMAGE_TAG}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/conf
+        ports:
+          - name: http
+            containerPort: 8000
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            cpu: 50m
+            memory: 100Mi
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: github-oauth-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: github-oauth-service
+    tier: public
+  ports:
+  - name: http
+    port: 8000
+    targetPort: http
