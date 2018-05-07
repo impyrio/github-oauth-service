@@ -53,11 +53,6 @@ spec:
               secretKeyRef:
                 name: session-config
                 key: mongo-collection
-          - name: MONGO_COLLECTION
-            valueFrom:
-              secretKeyRef:
-                name: session-config
-                key: mongo-collection
           - name: SESSION_SECRET
             valueFrom:
               secretKeyRef:
