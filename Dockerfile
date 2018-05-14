@@ -15,7 +15,7 @@ RUN npm install \
  && mv /app/node_modules /node_modules
 
 # Copy app source
-COPY app.js .
+COPY app.js terms.html ./
 
 ENV PORT 8000
 EXPOSE 8000
