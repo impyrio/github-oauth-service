@@ -99,4 +99,8 @@ app.get('/oauth[:]authorize', (req, res) => {
   });
 });
 
+app.get('/oauth[:]terms', (req, res) => {
+  res.sendFile(__dirname + '/terms.html');
+});
+
 app.listen(process.env.PORT || 8000);
